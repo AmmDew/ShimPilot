@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 from openpilot.starpilot.ui.raylib import rl
-import hashlib
 from importlib.resources import as_file, files
 import select
 import sys
@@ -39,10 +38,8 @@ class Spinner(Widget):
     super().__init__()
     self._hero_texture = None
     try:
-      with as_file(files("openpilot.selfdrive").joinpath("assets/images/starpilot_boot.png")) as hero:
-        expected = "f7da71fa91c961e8118d54756dae0324ecf74488cdd83d001b2c49a625f6a9de"
-        if hero.stat().st_size == 493583 and hashlib.sha256(hero.read_bytes()).hexdigest() == expected:
-          self._hero_texture = gui_app.texture("images/starpilot_boot.png", gui_app.width, gui_app.height)
+      with as_file(files("openpilot.selfdrive").joinpath("assets/images/starpilot_boot.png")):
+        self._hero_texture = gui_app.texture("images/starpilot_boot.png", gui_app.width, gui_app.height)
     except (OSError, RuntimeError):
       pass
     self._comma_texture = gui_app.texture("images/spinner_comma.png", TEXTURE_SIZE, TEXTURE_SIZE)
