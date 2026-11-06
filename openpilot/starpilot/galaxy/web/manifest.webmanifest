@@ -5,8 +5,8 @@
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#0e0a1a",
-  "theme_color": "#6f42a6",
+  "background_color": "#100509",
+  "theme_color": "#5c1026",
   "icons": [
     {
       "src": "./assets/galaxy-icon.svg",

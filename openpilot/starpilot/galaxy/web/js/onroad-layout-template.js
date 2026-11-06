@@ -110,8 +110,8 @@ export const ONROAD_LAYOUT_TEMPLATE = `
                 <g v-if="!projection && state.showFavoriteZones && state.showEditingAids" aria-hidden="true" pointer-events="none">
                   <g v-if="state.profile === 'large'">
                     <g v-for="zone in quickSelectShelves" :key="zone.id">
-                      <rect :x="zone.x" :y="zone.y" :width="zone.width" :height="zone.height" rx="28" fill="#b799ff0a" :stroke="zone.conflicts.length ? '#e2b886' : '#b799ff88'" stroke-width="2" stroke-dasharray="8 6" />
-                      <text :x="zone.x + 16" :y="zone.y + 28" font-size="20" :fill="zone.conflicts.length ? '#e2b886' : '#d8c8ff'">{{ zone.label }}{{ zone.conflicts.length ? ' — speed widget overlap' : '' }}</text>
+                      <rect :x="zone.x" :y="zone.y" :width="zone.width" :height="zone.height" rx="28" fill="#d06a7e0a" :stroke="zone.conflicts.length ? '#e2b886' : '#d06a7e88'" stroke-width="2" stroke-dasharray="8 6" />
+                      <text :x="zone.x + 16" :y="zone.y + 28" font-size="20" :fill="zone.conflicts.length ? '#e2b886' : '#f4cdd4'">{{ zone.label }}{{ zone.conflicts.length ? ' — speed widget overlap' : '' }}</text>
                     </g>
                     <g v-for="zone in favoriteZones" :key="zone.id">
                       <defs><mask :id="'favorite-area-' + zone.id" maskUnits="userSpaceOnUse">
@@ -121,14 +121,14 @@ export const ONROAD_LAYOUT_TEMPLATE = `
                         </template>
                       </mask></defs>
                       <g :mask="'url(#favorite-area-' + zone.id + ')'">
-                        <rect :x="zone.x" :y="zone.y" :width="zone.width" :height="zone.height" fill="#b799ff16" stroke="#b799ff88" :stroke-width="state.profile === 'large' ? 3 : 1" stroke-dasharray="5 5" />
-                        <text :x="zone.x + zone.width / 2" :y="zone.y + zone.height - 8" text-anchor="middle" :font-size="state.profile === 'large' ? 20 : 10" fill="#d8c8ff">{{ zone.label }}</text>
+                        <rect :x="zone.x" :y="zone.y" :width="zone.width" :height="zone.height" fill="#d06a7e16" stroke="#d06a7e88" :stroke-width="state.profile === 'large' ? 3 : 1" stroke-dasharray="5 5" />
+                        <text :x="zone.x + zone.width / 2" :y="zone.y + zone.height - 8" text-anchor="middle" :font-size="state.profile === 'large' ? 20 : 10" fill="#f4cdd4">{{ zone.label }}</text>
                       </g>
                     </g>
                   </g>
                   <g v-else v-for="zone in profile.inputZones || []" :key="zone.id">
-                    <rect :x="zone.x" :y="zone.y" :width="zone.width" :height="zone.height" fill="#b799ff16" stroke="#b799ff88" :stroke-width="state.profile === 'large' ? 3 : 1" stroke-dasharray="5 5" />
-                    <text :x="zone.x + zone.width / 2" :y="zone.y + zone.height - 8" text-anchor="middle" :font-size="state.profile === 'large' ? 20 : 10" fill="#d8c8ff">{{ zone.label }}</text>
+                    <rect :x="zone.x" :y="zone.y" :width="zone.width" :height="zone.height" fill="#d06a7e16" stroke="#d06a7e88" :stroke-width="state.profile === 'large' ? 3 : 1" stroke-dasharray="5 5" />
+                    <text :x="zone.x + zone.width / 2" :y="zone.y + zone.height - 8" text-anchor="middle" :font-size="state.profile === 'large' ? 20 : 10" fill="#f4cdd4">{{ zone.label }}</text>
                   </g>
                 </g>
                 <g v-for="widget in renderWidgets" :key="widget.id" class="gx-layout__widget" :class="{'is-selected': state.drag?.id === widget.id, 'is-editing': state.showEditingAids && state.inspectorPanel === 'edit' && state.selected === widget.id}"
@@ -140,11 +140,11 @@ export const ONROAD_LAYOUT_TEMPLATE = `
                   @pointerdown="startDrag(widget.id, $event)">
                   <rect class="gx-layout__hit" :y="-(widget.visualInsetTop || 0)" :width="widget.width" :height="widget.height + (widget.visualInsetTop || 0) + (widget.visualInsetBottom || 0)" fill="transparent" />
                   <LayoutWidgetPreview :widget="widget" :palette="widgetColors(widget.id)" :profile="state.profile" :scene="state.scene" :clock24-hour="!!state.draft.clock24Hour" :native="runtimeWidget(widget.id)" :art="state.art" />
-                  <rect class="gx-layout__selection" :y="-(widget.visualInsetTop || 0)" :width="widget.width" :height="widget.height + (widget.visualInsetTop || 0) + (widget.visualInsetBottom || 0)" fill="none" stroke="#b799ff" :stroke-width="state.profile === 'large' ? 5 : 1.5" stroke-dasharray="6 4" />
+                  <rect class="gx-layout__selection" :y="-(widget.visualInsetTop || 0)" :width="widget.width" :height="widget.height + (widget.visualInsetTop || 0) + (widget.visualInsetBottom || 0)" fill="none" stroke="#d06a7e" :stroke-width="state.profile === 'large' ? 5 : 1.5" stroke-dasharray="6 4" />
                   <g v-if="widget.box && state.selected === widget.id && editable" class="gx-layout__resize" role="button" :aria-label="'Resize ' + widget.label"
                     :transform="'translate(' + widget.width + ' ' + widget.height + ')'" @pointerdown="startResize(widget.id, $event)">
-                    <circle r="34" fill="transparent" /><circle r="16" fill="#b799ff" stroke="#16121f" stroke-width="4" />
-                    <path d="M-6 6 L6 -6 M0 6 L6 0" stroke="#16121f" stroke-width="3" stroke-linecap="round" />
+                    <circle r="34" fill="transparent" /><circle r="16" fill="#d06a7e" stroke="#1c0a0e" stroke-width="4" />
+                    <path d="M-6 6 L6 -6 M0 6 L6 0" stroke="#1c0a0e" stroke-width="3" stroke-linecap="round" />
                   </g>
                 </g>
                 <g v-if="projection && !nativeBackdropReady" data-preview-source="fixed-wordmark" role="img" aria-label="StarPilot, fixed logo" pointer-events="none"
@@ -159,7 +159,7 @@ export const ONROAD_LAYOUT_TEMPLATE = `
                     :x1="guide.axis === 'x' ? guide.value + previewShift(state.drag?.id) : 0" :x2="guide.axis === 'x' ? guide.value + previewShift(state.drag?.id) : profile.width"
                     :y1="guide.axis === 'y' ? guide.value : 0" :y2="guide.axis === 'y' ? guide.value : profile.height" vector-effect="non-scaling-stroke" />
                 </g>
-                <rect v-if="state.showEditingAids && selectionBox" class="gx-layout__outline" :x="selectionBox.x" :y="selectionBox.y" :width="selectionBox.width" :height="selectionBox.height" rx="4" fill="none" stroke="#d4baff" stroke-width="2" vector-effect="non-scaling-stroke" />
+                <rect v-if="state.showEditingAids && selectionBox" class="gx-layout__outline" :x="selectionBox.x" :y="selectionBox.y" :width="selectionBox.width" :height="selectionBox.height" rx="4" fill="none" stroke="#f4cdd4" stroke-width="2" vector-effect="non-scaling-stroke" />
               </svg>
               </div>
               <!-- The Small screen is too short to carry the chip over the layout; it sits underneath instead. -->

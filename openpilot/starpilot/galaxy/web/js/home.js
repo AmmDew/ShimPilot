@@ -70,7 +70,7 @@ export function driveSummary(feed) {
   const maximum = Math.max(1, ...data.week.days.map((day) => day.distanceMeters ?? 0))
   const models = data.models
   const modelTotal = models.reduce((sum, model) => sum + (model.distanceMeters ?? 0), 0)
-  const colors = ["#5ec8c8", "#8b6cc5", "#d4a060"]
+  const colors = ["#5ec8c8", "#b23a54", "#d4a060"]
   const modelColor = (index) => colors[index] || `hsl(${(index * 137.508) % 360} 55% 65%)`
   let offset = 0
   const recordedModels = models.map((model, index) => {

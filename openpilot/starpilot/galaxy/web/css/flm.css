@@ -1,5 +1,5 @@
 /* A driving report first; exact tuning evidence remains available on demand. */
-.gx-tuner { --tuner-panel: #151426;--tuner-raised: #1d1b32;--tuner-review: #ffd08a;--tuner-review-bg: #2c251f;--tuner-saved: #79e4d9;--tuner-border: #3a374e;gap: 16px;padding-bottom: max(32px, env(safe-area-inset-bottom)); }
+.gx-tuner { --tuner-panel: #1c0a0e;--tuner-raised: #2e1a20;--tuner-review: #ffd08a;--tuner-review-bg: #2c251f;--tuner-saved: #79e4d9;--tuner-border: #6e2233;gap: 16px;padding-bottom: max(32px, env(safe-area-inset-bottom)); }
 [data-theme="light"] .gx-tuner { --tuner-panel: #fff;--tuner-raised: #f4f2fa;--tuner-review: #865000;--tuner-review-bg: #fff5e3;--tuner-saved: #076c63;--tuner-border: #d9d5e4; }
 .gx-tuner .gx-card { background: var(--tuner-panel);box-shadow: none;border-color: var(--tuner-border); }
 .gx-tuner .gx-tuner__heading h2 { font-size: clamp(26px, 4vw, 34px);letter-spacing: -.035em; }
