@@ -360,9 +360,9 @@ margin-right: 4px;
 border-radius: var(--radius-full);
 transition: background-color var(--motion-fast), transform var(--motion-fast);
 }
-.gx-brand { display: block; width: 28px; height: 28px; flex: none; background: currentColor; mask: url("../assets/starpilot-logo.svg") center / contain no-repeat; }
+.gx-brand { display: block; width: 23px; height: 28px; flex: none; background: currentColor; mask: url("../assets/starpilot-logo.svg") center / contain no-repeat; }
 [data-theme="light"] .gx-brand { color: #6f42a6; }
-.gx-drawer__header .gx-brand { width: 44px; height: 44px; }
+.gx-drawer__header .gx-brand { width: 36px; height: 44px; }
 .gx-appbar__home:hover { background-color: var(--glass-bg-hover); }
 .gx-appbar__home:active { transform: scale(0.96); }
 .gx-appbar__home:focus-visible {
