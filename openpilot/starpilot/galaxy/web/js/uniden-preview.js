@@ -172,7 +172,7 @@ function drawCard(ctx, alert, font) {
     ctx.rect(x + w - 36 - muteWidth, y - 2, muteWidth + 16, 4); ctx.clip('evenodd')
   }
   roundRect(ctx, x, y, w, h, 14)
-  ctx.lineWidth = 2; ctx.strokeStyle = '#9D72FF'; ctx.stroke()
+  ctx.lineWidth = 2; ctx.strokeStyle = '#b23a54'; ctx.stroke()
   ctx.restore()
   const tone = alert.band === 'K' ? '#FFBA4E' : '#FF5B65'
   ctx.textBaseline = 'middle'
@@ -210,7 +210,7 @@ export const PREVIEW_SCENARIOS = {
     chill: scene('K in Chill mode', 'K', 4, 'front', { border: '#FFD600' }),
     disengaged: scene('K while disengaged', 'K', 4, 'front', { border: '#122839' }),
     'tight-curve': scene('Ka in a tight curve', 'KA', 5, 'front', { curve: 'tight' }),
-    switchback: scene('Ka with Switchback', 'KA', 5, 'side', { border: '#8B6CC5' }),
+    switchback: scene('Ka with Switchback', 'KA', 5, 'side', { border: '#b23a54' }),
     'laser-curve': scene('Laser in a tight curve', 'LASER', 8, 'front', { curve: 'tight' }),
   },
 }

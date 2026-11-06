@@ -212,14 +212,14 @@ export const LayoutWidgetPreview = {
         <rect x="1" y="1" :width="widget.width - 2" :height="widget.height - 2" :rx="widget.height * .1"
           :fill="palette.cardFill" :stroke="palette.cardBorder" />
         <svg :x="widget.height * .1" :y="widget.height * .05" :width="widget.height * .8" :height="widget.height * .8" viewBox="0 0 80 80">
-          <g fill="none" stroke="#c7aef7" stroke-width="3" stroke-linecap="round">
-            <circle cx="27" cy="28" r="13" fill="#c7aef7" />
+          <g fill="none" stroke="#e0a2af" stroke-width="3" stroke-linecap="round">
+            <circle cx="27" cy="28" r="13" fill="#e0a2af" />
             <path d="M27 6v-4 M27 50v4 M5 28H1 M49 28h4 M11 12l-3-3 M43 12l3-3 M11 44l-3 3" />
           </g>
-          <path d="M20 61a13 13 0 0 1 0-26 18 18 0 0 1 34-3 14 14 0 1 1 4 29Z" fill="#edf0ff" />
+          <path d="M20 61a13 13 0 0 1 0-26 18 18 0 0 1 34-3 14 14 0 1 1 4 29Z" fill="#f6eef1" />
         </svg>
         <text :x="widget.height" :y="widget.height * .55" :font-size="profile === 'large' ? 44 : 24" font-weight="600">70°F</text>
-        <text :x="widget.height" :y="widget.height * .88" :font-size="profile === 'large' ? 16 : 8" fill="#c7aef7">Open-Meteo</text>
+        <text :x="widget.height" :y="widget.height * .88" :font-size="profile === 'large' ? 16 : 8" fill="#e0a2af">Open-Meteo</text>
       </g>
       <template v-else-if="widget.kind === 'clock'">
         <text :x="widget.width / 2" :y="widget.height / 2" text-anchor="middle" dominant-baseline="middle"
@@ -227,131 +227,131 @@ export const LayoutWidgetPreview = {
           style="filter: drop-shadow(2px 2px 1px #000000aa)">{{ clock24Hour ? '18:00' : '12:00 PM' }}</text>
       </template>
       <g v-else-if="widget.kind === 'now_playing' && widget.size === 'big'">
-        <defs><linearGradient id="gx-np-wash" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8a3a52" /><stop offset=".45" stop-color="#5a2350" /><stop offset="1" stop-color="#22143f" /></linearGradient></defs>
+        <defs><linearGradient id="gx-np-wash" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8a3a52" /><stop offset=".45" stop-color="#8f1d38" /><stop offset="1" stop-color="#2e1a20" /></linearGradient></defs>
         <rect x="0" y="0" :width="widget.width" :height="widget.height" rx="40" fill="url(#gx-np-wash)" :fill-opacity="(widget.opacity ?? 85) / 100" />
         <rect x="40" y="20" width="138" height="36" rx="18" fill="#000000" fill-opacity=".35" stroke="#ffffff" stroke-opacity=".12" />
-        <path d="M61 47 V29 H69 V32 H63.6 V45" fill="#c7aef7" /><circle cx="61" cy="46" r="4.3" fill="#c7aef7" />
-        <text x="82" y="44" font-size="18" font-weight="600" fill="#f5f2fc">StarPilot</text>
+        <path d="M61 47 V29 H69 V32 H63.6 V45" fill="#e0a2af" /><circle cx="61" cy="46" r="4.3" fill="#e0a2af" />
+        <text x="82" y="44" font-size="18" font-weight="600" fill="#fbf3f4">StarPilot</text>
         <text :x="widget.width - 40" y="44" text-anchor="end" font-size="18" fill="#d6d2e0">Spotify</text>
-        <text :x="widget.width / 2" y="92" text-anchor="middle" font-size="30" font-weight="600" fill="#f5f2fc">Midnight City<tspan font-weight="400" fill="#d6d2e0">  •  M83</tspan></text>
+        <text :x="widget.width / 2" y="92" text-anchor="middle" font-size="30" font-weight="600" fill="#fbf3f4">Midnight City<tspan font-weight="400" fill="#d6d2e0">  •  M83</tspan></text>
         <rect x="40" y="112" :width="widget.width - 80" height="10" rx="5" fill="#ffffff" fill-opacity=".18" />
         <rect x="40" y="112" :width="(widget.width - 80) * .38" height="10" rx="5" fill="#ffffff" />
-        <text x="40" y="144" font-size="16" fill="#b8b2c8">1:32</text>
-        <text :x="widget.width - 40" y="144" text-anchor="end" font-size="16" fill="#b8b2c8">4:03</text>
+        <text x="40" y="144" font-size="16" fill="#c8b2b6">1:32</text>
+        <text :x="widget.width - 40" y="144" text-anchor="end" font-size="16" fill="#c8b2b6">4:03</text>
         <g :transform="'translate(' + (widget.width / 2 - 192) + ' 208)'" fill="none" stroke="#d6d2e0" stroke-width="3.5" stroke-linecap="round">
           <path d="M-16 -10 C0 -10 0 10 18 10 M-16 10 C0 10 0 -10 18 -10 M13 -16 L19 -10 L13 -4 M13 4 L19 10 L13 16" />
         </g>
-        <g :transform="'translate(' + (widget.width / 2 - 96) + ' 208)'"><circle r="32" fill="#ffffff" fill-opacity=".14" /><path d="M9 -12 L9 12 L-9 0 Z M-14 -12 H-9 V12 H-14 Z" fill="#f5f2fc" /></g>
-        <g :transform="'translate(' + widget.width / 2 + ' 208)'"><circle r="36" fill="#f5f2fc" /><path d="M-10 -13 H-3 V13 H-10 Z M3 -13 H10 V13 H3 Z" fill="#0f0d17" /></g>
-        <g :transform="'translate(' + (widget.width / 2 + 96) + ' 208)'"><circle r="32" fill="#ffffff" fill-opacity=".14" /><path d="M-9 -12 L-9 12 L9 0 Z M9 -12 H14 V12 H9 Z" fill="#f5f2fc" /></g>
+        <g :transform="'translate(' + (widget.width / 2 - 96) + ' 208)'"><circle r="32" fill="#ffffff" fill-opacity=".14" /><path d="M9 -12 L9 12 L-9 0 Z M-14 -12 H-9 V12 H-14 Z" fill="#fbf3f4" /></g>
+        <g :transform="'translate(' + widget.width / 2 + ' 208)'"><circle r="36" fill="#fbf3f4" /><path d="M-10 -13 H-3 V13 H-10 Z M3 -13 H10 V13 H3 Z" fill="#170709" /></g>
+        <g :transform="'translate(' + (widget.width / 2 + 96) + ' 208)'"><circle r="32" fill="#ffffff" fill-opacity=".14" /><path d="M-9 -12 L-9 12 L9 0 Z M9 -12 H14 V12 H9 Z" fill="#fbf3f4" /></g>
         <g :transform="'translate(' + (widget.width / 2 + 192) + ' 208)'" fill="none" stroke="#d6d2e0" stroke-width="4" stroke-linecap="round">
           <path d="M-14 -9 H12 M14 9 H-12 M-16 -11 V4 M16 11 V-4" /><path d="M10 -16 L19 -9 L10 -2 Z M-10 16 L-19 9 L-10 2 Z" fill="#d6d2e0" stroke="none" />
         </g>
       </g>
       <g v-else-if="widget.kind === 'now_playing'">
-        <defs><linearGradient id="gx-np-wash-small" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8a3a52" /><stop offset=".45" stop-color="#5a2350" /><stop offset="1" stop-color="#22143f" /></linearGradient></defs>
+        <defs><linearGradient id="gx-np-wash-small" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8a3a52" /><stop offset=".45" stop-color="#8f1d38" /><stop offset="1" stop-color="#2e1a20" /></linearGradient></defs>
         <rect x="0" y="0" :width="widget.width" :height="widget.height" :rx="widget.height / 2" fill="url(#gx-np-wash-small)" :fill-opacity="(widget.opacity ?? 85) / 100" />
-        <circle :cx="widget.height / 2" :cy="widget.height / 2" r="36" fill="#f5f2fc" />
-        <rect :x="widget.height / 2 - 10" :y="widget.height / 2 - 13" width="7" height="26" rx="3" fill="#0f0d17" />
-        <rect :x="widget.height / 2 + 3" :y="widget.height / 2 - 13" width="7" height="26" rx="3" fill="#0f0d17" />
-        <text :x="widget.height + 4" y="42" font-size="26" font-weight="600" fill="#f5f2fc">Midnight City</text>
+        <circle :cx="widget.height / 2" :cy="widget.height / 2" r="36" fill="#fbf3f4" />
+        <rect :x="widget.height / 2 - 10" :y="widget.height / 2 - 13" width="7" height="26" rx="3" fill="#170709" />
+        <rect :x="widget.height / 2 + 3" :y="widget.height / 2 - 13" width="7" height="26" rx="3" fill="#170709" />
+        <text :x="widget.height + 4" y="42" font-size="26" font-weight="600" fill="#fbf3f4">Midnight City</text>
         <text :x="widget.height + 4" y="71" font-size="19" fill="#d6d2e0">M83</text>
-        <g :transform="'translate(' + (widget.width - 42) + ' ' + widget.height / 2 + ') scale(1.3)'" fill="#c7aef7">
+        <g :transform="'translate(' + (widget.width - 42) + ' ' + widget.height / 2 + ') scale(1.3)'" fill="#e0a2af">
           <path d="M0 7 V-11 H8 V-7.8 H2.6 V7" /><circle cx="-3" cy="7" r="5" />
         </g>
       </g>
       <g v-else-if="widget.kind === 'network_signal' && !['horizontal', 'vertical'].includes(widget.size)" :transform="'scale(' + widget.width / 112 + ')'">
-        <rect width="112" :height="(widget.bluetooth === false ? 102 : 140) + (widget.wifiName ? 22 : 0)" rx="24" fill="#0f0d17" :fill-opacity="235 / 255 * (widget.opacity ?? 85) / 100" />
-        <text v-if="widget.wifiName" x="56" y="21" text-anchor="middle" font-size="15" font-weight="600" fill="#f5f2fc">Home Wi-Fi</text>
+        <rect width="112" :height="(widget.bluetooth === false ? 102 : 140) + (widget.wifiName ? 22 : 0)" rx="24" fill="#170709" :fill-opacity="235 / 255 * (widget.opacity ?? 85) / 100" />
+        <text v-if="widget.wifiName" x="56" y="21" text-anchor="middle" font-size="15" font-weight="600" fill="#fbf3f4">Home Wi-Fi</text>
         <g :transform="widget.wifiName ? 'translate(0 22)' : null">
           <g>
-            <path d="M17.0 78.5A45 45 0 0 1 11.2 60.7" fill="none" stroke="#f5f2fc" stroke-width="7" />
-            <path d="M95.0 78.5A45 45 0 0 0 100.8 60.7" fill="none" stroke="#a480f2" stroke-width="7" />
-            <path d="M11.0 56.8A45 45 0 0 1 14.6 38.4" fill="none" stroke="#f5f2fc" stroke-width="7" />
-            <path d="M101.0 56.8A45 45 0 0 0 97.4 38.4" fill="none" stroke="#a480f2" stroke-width="7" />
+            <path d="M17.0 78.5A45 45 0 0 1 11.2 60.7" fill="none" stroke="#fbf3f4" stroke-width="7" />
+            <path d="M95.0 78.5A45 45 0 0 0 100.8 60.7" fill="none" stroke="#d4506a" stroke-width="7" />
+            <path d="M11.0 56.8A45 45 0 0 1 14.6 38.4" fill="none" stroke="#fbf3f4" stroke-width="7" />
+            <path d="M101.0 56.8A45 45 0 0 0 97.4 38.4" fill="none" stroke="#d4506a" stroke-width="7" />
             <path d="M16.3 34.9A45 45 0 0 1 28.3 20.5" fill="none" stroke="#ffffff2b" stroke-width="7" />
-            <path d="M95.7 34.9A45 45 0 0 0 83.7 20.5" fill="none" stroke="#a480f2" stroke-width="7" />
+            <path d="M95.7 34.9A45 45 0 0 0 83.7 20.5" fill="none" stroke="#d4506a" stroke-width="7" />
             <path d="M31.5 18.3A45 45 0 0 1 49.0 11.6" fill="none" stroke="#ffffff2b" stroke-width="7" />
-            <path d="M80.5 18.3A45 45 0 0 0 63.0 11.6" fill="none" stroke="#a480f2" stroke-width="7" />
+            <path d="M80.5 18.3A45 45 0 0 0 63.0 11.6" fill="none" stroke="#d4506a" stroke-width="7" />
           </g>
           <g :transform="widget.bluetooth === false ? 'translate(0 8)' : null">
-            <rect x="34.0" y="48" width="3" height="4" fill="#b8b2c8" />
-            <rect x="38.5" y="44" width="3" height="8" fill="#b8b2c8" />
-            <rect x="43.0" y="40" width="3" height="12" fill="#b8b2c8" />
-            <rect x="47.5" y="36" width="3" height="16" fill="#b8b2c8" />
-            <circle cx="69" cy="50" r="2" fill="#a480f2" />
-            <path d="M64.2 45.7A6.5 6.5 0 0 1 73.8 45.7" fill="none" stroke="#a480f2" stroke-width="2.4" />
-            <path d="M60.5 42.3A11.5 11.5 0 0 1 77.5 42.3" fill="none" stroke="#a480f2" stroke-width="2.4" />
+            <rect x="34.0" y="48" width="3" height="4" fill="#c8b2b6" />
+            <rect x="38.5" y="44" width="3" height="8" fill="#c8b2b6" />
+            <rect x="43.0" y="40" width="3" height="12" fill="#c8b2b6" />
+            <rect x="47.5" y="36" width="3" height="16" fill="#c8b2b6" />
+            <circle cx="69" cy="50" r="2" fill="#d4506a" />
+            <path d="M64.2 45.7A6.5 6.5 0 0 1 73.8 45.7" fill="none" stroke="#d4506a" stroke-width="2.4" />
+            <path d="M60.5 42.3A11.5 11.5 0 0 1 77.5 42.3" fill="none" stroke="#d4506a" stroke-width="2.4" />
           </g>
           <g v-if="widget.bluetooth !== false">
             <path d="M56 66V80M56 66L60.5 69.5L51.5 76M51.5 70L60.5 76.5L56 80" fill="none" stroke="#6eafff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-            <text x="56" y="106" text-anchor="middle" font-size="15" font-weight="600" fill="#f5f2fc">iPhone 15</text>
-            <text x="56" y="126" text-anchor="middle" font-size="15" font-weight="600" fill="#f5f2fc">AirPods</text>
+            <text x="56" y="106" text-anchor="middle" font-size="15" font-weight="600" fill="#fbf3f4">iPhone 15</text>
+            <text x="56" y="126" text-anchor="middle" font-size="15" font-weight="600" fill="#fbf3f4">AirPods</text>
           </g>
-          <text v-else x="56" y="84" text-anchor="middle" font-size="14" font-weight="600" fill="#f5f2fc">Wi-Fi</text>
+          <text v-else x="56" y="84" text-anchor="middle" font-size="14" font-weight="600" fill="#fbf3f4">Wi-Fi</text>
         </g>
       </g>
       <g v-else-if="widget.kind === 'network_signal' && widget.size === 'horizontal'" :transform="'scale(' + widget.width / 268 + ')'">
-        <rect width="268" :height="112 + (widget.wifiName ? 22 : 0)" rx="28" fill="#0f0d17" :fill-opacity="235 / 255 * (widget.opacity ?? 85) / 100" />
-        <text v-if="widget.wifiName" x="24" y="23" font-size="16" font-weight="600" fill="#f5f2fc">Home Wi-Fi</text>
+        <rect width="268" :height="112 + (widget.wifiName ? 22 : 0)" rx="28" fill="#170709" :fill-opacity="235 / 255 * (widget.opacity ?? 85) / 100" />
+        <text v-if="widget.wifiName" x="24" y="23" font-size="16" font-weight="600" fill="#fbf3f4">Home Wi-Fi</text>
         <g :transform="widget.wifiName ? 'translate(0 22)' : null">
           <g :transform="widget.bluetooth === false ? 'translate(0 11)' : null">
-            <rect x="24" y="29" width="3" height="4" fill="#b8b2c8" />
-            <rect x="28.5" y="25" width="3" height="8" fill="#b8b2c8" />
-            <rect x="33" y="21" width="3" height="12" fill="#b8b2c8" />
-            <rect x="37.5" y="17" width="3" height="16" fill="#b8b2c8" />
-            <rect x="56" y="22" width="41" height="8" rx="4" fill="#f5f2fc" />
-            <rect x="105" y="22" width="41" height="8" rx="4" fill="#f5f2fc" />
+            <rect x="24" y="29" width="3" height="4" fill="#c8b2b6" />
+            <rect x="28.5" y="25" width="3" height="8" fill="#c8b2b6" />
+            <rect x="33" y="21" width="3" height="12" fill="#c8b2b6" />
+            <rect x="37.5" y="17" width="3" height="16" fill="#c8b2b6" />
+            <rect x="56" y="22" width="41" height="8" rx="4" fill="#fbf3f4" />
+            <rect x="105" y="22" width="41" height="8" rx="4" fill="#fbf3f4" />
             <rect x="154" y="22" width="41" height="8" rx="4" fill="#ffffff2b" />
             <rect x="203" y="22" width="41" height="8" rx="4" fill="#ffffff2b" />
           </g>
           <g :transform="widget.bluetooth === false ? 'translate(0 19)' : null">
-            <circle cx="33" cy="61" r="2" fill="#a480f2" />
-            <path d="M28.17 56.65A6.5 6.5 0 0 1 37.83 56.65" fill="none" stroke="#a480f2" stroke-width="2.4" />
-            <path d="M24.45 53.30A11.5 11.5 0 0 1 41.55 53.30" fill="none" stroke="#a480f2" stroke-width="2.4" />
-            <rect x="56" y="52" width="41" height="8" rx="4" fill="#a480f2" />
-            <rect x="105" y="52" width="41" height="8" rx="4" fill="#a480f2" />
-            <rect x="154" y="52" width="41" height="8" rx="4" fill="#a480f2" />
-            <rect x="203" y="52" width="41" height="8" rx="4" fill="#a480f2" />
+            <circle cx="33" cy="61" r="2" fill="#d4506a" />
+            <path d="M28.17 56.65A6.5 6.5 0 0 1 37.83 56.65" fill="none" stroke="#d4506a" stroke-width="2.4" />
+            <path d="M24.45 53.30A11.5 11.5 0 0 1 41.55 53.30" fill="none" stroke="#d4506a" stroke-width="2.4" />
+            <rect x="56" y="52" width="41" height="8" rx="4" fill="#d4506a" />
+            <rect x="105" y="52" width="41" height="8" rx="4" fill="#d4506a" />
+            <rect x="154" y="52" width="41" height="8" rx="4" fill="#d4506a" />
+            <rect x="203" y="52" width="41" height="8" rx="4" fill="#d4506a" />
           </g>
           <g v-if="widget.bluetooth !== false">
             <path d="M33 79V93M33 79L37.5 82.5L28.5 89M28.5 83L37.5 89.5L33 93" fill="none" stroke="#6eafff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-            <text x="56" y="92" font-size="16" font-weight="600" fill="#f5f2fc">iPhone 15, AirPods</text>
+            <text x="56" y="92" font-size="16" font-weight="600" fill="#fbf3f4">iPhone 15, AirPods</text>
           </g>
         </g>
       </g>
       <g v-else-if="widget.kind === 'network_signal' && widget.size === 'vertical'" :transform="'scale(' + widget.width / 112 + ')'">
-        <rect width="112" :height="196 + (widget.wifiName ? 22 : 0)" rx="24" fill="#0f0d17" :fill-opacity="235 / 255 * (widget.opacity ?? 85) / 100" />
-        <text v-if="widget.wifiName" x="56" y="21" text-anchor="middle" font-size="15" font-weight="600" fill="#f5f2fc">Home Wi-Fi</text>
+        <rect width="112" :height="196 + (widget.wifiName ? 22 : 0)" rx="24" fill="#170709" :fill-opacity="235 / 255 * (widget.opacity ?? 85) / 100" />
+        <text v-if="widget.wifiName" x="56" y="21" text-anchor="middle" font-size="15" font-weight="600" fill="#fbf3f4">Home Wi-Fi</text>
         <g :transform="widget.wifiName ? 'translate(0 22)' : null">
           <g :transform="widget.bluetooth === false ? 'translate(0 32)' : null">
-            <circle cx="34" cy="85" r="8" fill="#f5f2fc" />
-            <circle cx="34" cy="64" r="8" fill="#f5f2fc" />
+            <circle cx="34" cy="85" r="8" fill="#fbf3f4" />
+            <circle cx="34" cy="64" r="8" fill="#fbf3f4" />
             <circle cx="34" cy="43" r="8" fill="#ffffff2b" />
             <circle cx="34" cy="22" r="8" fill="#ffffff2b" />
-            <rect x="25.75" y="114" width="3" height="4" fill="#b8b2c8" />
-            <rect x="30.25" y="110" width="3" height="8" fill="#b8b2c8" />
-            <rect x="34.75" y="106" width="3" height="12" fill="#b8b2c8" />
-            <rect x="39.25" y="102" width="3" height="16" fill="#b8b2c8" />
-            <circle cx="78" cy="85" r="8" fill="#a480f2" />
-            <circle cx="78" cy="64" r="8" fill="#a480f2" />
-            <circle cx="78" cy="43" r="8" fill="#a480f2" />
-            <circle cx="78" cy="22" r="8" fill="#a480f2" />
-            <circle cx="78" cy="116" r="2" fill="#a480f2" />
-            <path d="M73.17 111.65A6.5 6.5 0 0 1 82.83 111.65" fill="none" stroke="#a480f2" stroke-width="2.4" />
-            <path d="M69.45 108.30A11.5 11.5 0 0 1 86.55 108.30" fill="none" stroke="#a480f2" stroke-width="2.4" />
+            <rect x="25.75" y="114" width="3" height="4" fill="#c8b2b6" />
+            <rect x="30.25" y="110" width="3" height="8" fill="#c8b2b6" />
+            <rect x="34.75" y="106" width="3" height="12" fill="#c8b2b6" />
+            <rect x="39.25" y="102" width="3" height="16" fill="#c8b2b6" />
+            <circle cx="78" cy="85" r="8" fill="#d4506a" />
+            <circle cx="78" cy="64" r="8" fill="#d4506a" />
+            <circle cx="78" cy="43" r="8" fill="#d4506a" />
+            <circle cx="78" cy="22" r="8" fill="#d4506a" />
+            <circle cx="78" cy="116" r="2" fill="#d4506a" />
+            <path d="M73.17 111.65A6.5 6.5 0 0 1 82.83 111.65" fill="none" stroke="#d4506a" stroke-width="2.4" />
+            <path d="M69.45 108.30A11.5 11.5 0 0 1 86.55 108.30" fill="none" stroke="#d4506a" stroke-width="2.4" />
           </g>
           <g v-if="widget.bluetooth !== false">
             <line x1="14" y1="128" x2="98" y2="128" stroke="#ffffff2b" stroke-width="1.5" />
             <path d="M56 135V149M56 135L60.5 138.5L51.5 145M51.5 139L60.5 145.5L56 149" fill="none" stroke="#6eafff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-            <text x="56" y="167" text-anchor="middle" font-size="15" font-weight="600" fill="#f5f2fc">iPhone 15</text>
-            <text x="56" y="186" text-anchor="middle" font-size="15" font-weight="600" fill="#f5f2fc">AirPods</text>
+            <text x="56" y="167" text-anchor="middle" font-size="15" font-weight="600" fill="#fbf3f4">iPhone 15</text>
+            <text x="56" y="186" text-anchor="middle" font-size="15" font-weight="600" fill="#fbf3f4">AirPods</text>
           </g>
         </g>
       </g>
       <g v-else-if="widget.kind === 'uniden_alerts'">
         <g :transform="'scale(' + (widget.scale ?? 100) / 100 + ')'">
-        <rect x="1" y="1" width="458" height="74" rx="14" :stroke="palette.cardBorder || '#9d72ff'" stroke-width="2" :fill="palette.cardFill || '#10191f'" :fill-opacity="(100 - (widget.transparency ?? 8)) / 100" />
+        <rect x="1" y="1" width="458" height="74" rx="14" :stroke="palette.cardBorder || '#b23a54'" stroke-width="2" :fill="palette.cardFill || '#10191f'" :fill-opacity="(100 - (widget.transparency ?? 8)) / 100" />
         <text x="24" y="51" font-size="36" font-weight="600" fill="#ff5b65">KA</text>
         <text x="97" y="48" font-size="28" font-weight="600" :fill="palette.text || '#ffffff'">35.500 GHz</text>
         <rect v-for="i in 8" :key="i" :x="283 + (i - 1) * 11" :y="53 - (8 + (i - 1) * 3)" width="8" :height="8 + (i - 1) * 3"
@@ -360,12 +360,12 @@ export const LayoutWidgetPreview = {
         </g>
       </g>
       <g v-else-if="widget.kind === 'jetlink_status'">
-        <rect x="0" y="0" :width="widget.width" :height="widget.height" :rx="widget.height / 2" fill="#0f0d17" :fill-opacity="(widget.opacity ?? 85) / 100 * .92" />
+        <rect x="0" y="0" :width="widget.width" :height="widget.height" :rx="widget.height / 2" fill="#170709" :fill-opacity="(widget.opacity ?? 85) / 100 * .92" />
         <circle cx="40" cy="30" r="7.5" fill="#46c86e" />
         <text x="58" y="36" font-size="20" font-weight="700" letter-spacing="0.6" fill="#d6d2e0">BIG • JETLINK</text>
-        <text :x="widget.width - 62" y="37" text-anchor="end" font-size="24" font-weight="700" fill="#f5f2fc">24.6</text>
+        <text :x="widget.width - 62" y="37" text-anchor="end" font-size="24" font-weight="700" fill="#fbf3f4">24.6</text>
         <text :x="widget.width - 32" y="37" text-anchor="end" font-size="18" fill="#d6d2e0">ms</text>
-        <text x="32" y="75" font-size="28" font-weight="600" fill="#f5f2fc">Cinque v3</text>
+        <text x="32" y="75" font-size="28" font-weight="600" fill="#fbf3f4">Cinque v3</text>
       </g>
       <template v-else-if="widget.kind === 'speed_limit'">
         <text x="0" y="10" font-size="24" font-weight="500">LIMIT</text>
@@ -382,40 +382,40 @@ export const LayoutWidgetPreview = {
         <text :x="widget.width / 2" :y="widget.height / 2" text-anchor="middle" :font-size="widget.height / 10">{{ widget.label }}</text>
       </g>
       <g v-else-if="['nav_home', 'nav_work', 'bookmark'].includes(widget.kind)" :opacity="(widget.opacity ?? 100) / 100">
-        <rect v-if="widget.background !== false" x="1" y="1" :width="widget.width - 2" :height="widget.height - 2" rx="17" fill="#0f0d17f5" stroke="#c7aef7" stroke-width="3" />
-        <g v-if="widget.display === 'icons'" transform="translate(23 23) scale(2.6667)" fill="none" stroke="#c7aef7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <rect v-if="widget.background !== false" x="1" y="1" :width="widget.width - 2" :height="widget.height - 2" rx="17" fill="#170709f5" stroke="#e0a2af" stroke-width="3" />
+        <g v-if="widget.display === 'icons'" transform="translate(23 23) scale(2.6667)" fill="none" stroke="#e0a2af" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
           <path v-if="widget.kind === 'nav_home'" d="M3 11 L12 3 L21 11 M5 9 V21 H10 V14 H14 V21 H19 V9" />
           <path v-else-if="widget.kind === 'bookmark'" d="M6 3 H18 V21 L12 16 L6 21 Z" />
           <path v-else d="M8 7 V4 H16 V7 M3 7 H21 V21 H3 Z M3 12 L10 15 H14 L21 12 M10 13 V17 H14 V13" />
         </g>
         <template v-else>
-        <text :x="widget.width / 2" :y="widget.kind === 'bookmark' ? 48 : 43" text-anchor="middle" :font-size="widget.kind === 'bookmark' ? 34 : 25" :font-weight="widget.kind === 'bookmark' ? 600 : 400" fill="#c7aef7">{{ widget.kind === 'bookmark' ? widget.label : 'Navigate' }}</text>
-        <text :x="widget.width / 2" :y="widget.kind === 'bookmark' ? 89 : 88" text-anchor="middle" :font-size="widget.kind === 'bookmark' ? 25 : 34" :font-weight="widget.kind === 'bookmark' ? 400 : 600" fill="#c7aef7">{{ widget.kind === 'bookmark' ? 'Save event' : widget.label }}</text>
+        <text :x="widget.width / 2" :y="widget.kind === 'bookmark' ? 48 : 43" text-anchor="middle" :font-size="widget.kind === 'bookmark' ? 34 : 25" :font-weight="widget.kind === 'bookmark' ? 600 : 400" fill="#e0a2af">{{ widget.kind === 'bookmark' ? widget.label : 'Navigate' }}</text>
+        <text :x="widget.width / 2" :y="widget.kind === 'bookmark' ? 89 : 88" text-anchor="middle" :font-size="widget.kind === 'bookmark' ? 25 : 34" :font-weight="widget.kind === 'bookmark' ? 400 : 600" fill="#e0a2af">{{ widget.kind === 'bookmark' ? 'Save event' : widget.label }}</text>
         </template>
       </g>
       <g v-else-if="widget.kind === 'car_exit'" :opacity="(widget.opacity ?? 100) / 100">
-        <rect v-if="widget.background !== false" x="1" y="1" :width="widget.width - 2" :height="widget.height - 2" rx="15" fill="#0f0d17a6" stroke="#c7aef7c8" stroke-width="3" />
-        <g data-preview-icon="door-exit" fill="none" stroke="#c7aef7e6" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+        <rect v-if="widget.background !== false" x="1" y="1" :width="widget.width - 2" :height="widget.height - 2" rx="15" fill="#170709a6" stroke="#e0a2afc8" stroke-width="3" />
+        <g data-preview-icon="door-exit" fill="none" stroke="#e0a2afe6" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M54 20 H24 V76 H54" />
           <path d="M38 48 H78 M67 37 L78 48 L67 59" />
         </g>
       </g>
       <g v-else-if="widget.kind === 'nav_card' && profile === 'compact'">
-        <rect x="1" y="1" :width="widget.width - 2" :height="widget.height - 2" rx="20" fill="#0f0d17" stroke="#a07edcbe" stroke-width="2" />
+        <rect x="1" y="1" :width="widget.width - 2" :height="widget.height - 2" rx="20" fill="#170709" stroke="#a06072be" stroke-width="2" />
         <path d="M42 78 V42 Q42 32 52 32 H78 M64 18 L78 32 L64 46" fill="none" stroke="white" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
         <text x="104" y="46" font-size="28" font-weight="700" fill="white">500 ft</text>
-        <text x="104" y="74" font-size="18" font-weight="600" fill="#ded6f4">Turn right onto Main St</text>
-        <text x="18" y="118" font-size="16" fill="#ebe1ff">2.4 mi · 6 min</text>
-        <text :x="widget.width - 18" y="118" text-anchor="end" font-size="16" fill="#ebe1ff">ETA 3:51 PM</text>
+        <text x="104" y="74" font-size="18" font-weight="600" fill="#f2d9de">Turn right onto Main St</text>
+        <text x="18" y="118" font-size="16" fill="#f7e2e8">2.4 mi · 6 min</text>
+        <text :x="widget.width - 18" y="118" text-anchor="end" font-size="16" fill="#f7e2e8">ETA 3:51 PM</text>
       </g>
       <svg v-else-if="widget.kind === 'nav_card'" :width="widget.width" :height="widget.height" viewBox="0 0 560 255">
-        <rect x="1" y="1" :width="560 - 2" :height="253" rx="39" fill="#0f0d17f5" stroke="#a07edcbe" stroke-width="2" />
+        <rect x="1" y="1" :width="560 - 2" :height="253" rx="39" fill="#170709f5" stroke="#a06072be" stroke-width="2" />
         <text v-if="!googleRoutes" x="24" y="66" font-size="54" font-weight="700" fill="white">500 ft</text>
-        <text v-if="!googleRoutes" x="24" y="100" font-size="30" font-weight="600" fill="#ded6f4">Turn right onto Las Vegas Blvd</text>
+        <text v-if="!googleRoutes" x="24" y="100" font-size="30" font-weight="600" fill="#f2d9de">Turn right onto Las Vegas Blvd</text>
         <template v-if="!googleRoutes">
         <g v-for="(lane, i) in [['S', 0], ['S', 0], ['S', 0], ['R', 1], ['R', 1]]" :key="i" :transform="'translate(' + ((560 - 320) / 2 + i * 66) + ' 116)'">
-          <rect width="56" height="44" rx="13" :fill="lane[1] ? '#4e3e80' : '#222030'" />
-          <g transform="translate(28 22)" fill="none" :stroke="lane[1] ? '#ffffff' : '#70688a'" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect width="56" height="44" rx="13" :fill="lane[1] ? '#6e2233' : '#30181d'" />
+          <g transform="translate(28 22)" fill="none" :stroke="lane[1] ? '#ffffff' : '#8a686f'" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
             <path v-if="lane[0] === 'S'" d="M0 13 V-12 M-8 -4 L0 -12 L8 -4" />
             <path v-else d="M-8 13 V0 Q-8 -7 -1 -7 H10 M4 -13 L10 -7 L4 -1" />
           </g>
@@ -424,12 +424,12 @@ export const LayoutWidgetPreview = {
         <template v-else>
           <g transform="translate(24 28)" fill="none" stroke="white" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 56 V28 Q12 18 22 18 H48 M34 4 L48 18 L34 32" /></g>
           <text x="104" y="66" font-size="54" font-weight="700" fill="white">500 ft</text>
-          <text x="104" y="100" font-size="30" font-weight="600" fill="#ded6f4">Las Vegas Blvd</text>
+          <text x="104" y="100" font-size="30" font-weight="600" fill="#f2d9de">Las Vegas Blvd</text>
           <text :x="560 - 24" y="150" text-anchor="end" font-size="27" font-weight="500" fill="#d6d2e2">2.4 mi | 6 min</text>
         </template>
-        <rect x="24" y="171" :width="560 - 48 - 190" height="6" rx="3" fill="#a07edc3c" />
-        <rect x="24" y="171" :width="(560 - 48 - 190) * .35" height="6" rx="3" fill="#b296ff" />
-        <text :x="560 - 24" y="182" text-anchor="end" font-size="22" font-weight="600" fill="#ebe1ff">ETA 3:51 PM</text>
+        <rect x="24" y="171" :width="560 - 48 - 190" height="6" rx="3" fill="#a060723c" />
+        <rect x="24" y="171" :width="(560 - 48 - 190) * .35" height="6" rx="3" fill="#d26f85" />
+        <text :x="560 - 24" y="182" text-anchor="end" font-size="22" font-weight="600" fill="#f7e2e8">ETA 3:51 PM</text>
       </svg>
       <g v-else-if="widget.kind === 'nav_map'">
         <defs>
@@ -447,7 +447,7 @@ export const LayoutWidgetPreview = {
             <path d="M260 -20 L250 480" stroke="#fbbc04" stroke-width="5" vector-effect="non-scaling-stroke" />
           </template>
           <template v-else>
-          <rect width="600" height="450" fill="#0b0f16" opacity=".45" />
+          <rect width="600" height="450" fill="#12080a" opacity=".45" />
           <g stroke="#000000a8" vector-effect="non-scaling-stroke">
             <path d="M-20 120 Q200 150 640 90 M90 -20 L130 480 M430 -20 Q400 200 470 480 M-20 330 L640 360 M260 -20 L250 480" stroke-width="11" vector-effect="non-scaling-stroke" />
           </g>
@@ -456,15 +456,15 @@ export const LayoutWidgetPreview = {
           <path d="M260 -20 L250 480" stroke="#ffc45c" stroke-width="8" vector-effect="non-scaling-stroke" />
           </template>
           </g>
-          <path d="M300 330 Q258 300 254 250 L262 -20" stroke="#8f6bff55" stroke-width="20" vector-effect="non-scaling-stroke" />
-          <path d="M300 330 Q258 300 254 250 L262 -20" stroke="#a98bff" stroke-width="9" vector-effect="non-scaling-stroke" />
+          <path d="M300 330 Q258 300 254 250 L262 -20" stroke="#b23a5455" stroke-width="20" vector-effect="non-scaling-stroke" />
+          <path d="M300 330 Q258 300 254 250 L262 -20" stroke="#d4506a" stroke-width="9" vector-effect="non-scaling-stroke" />
         </g>
         <g :transform="'translate(' + widget.width / 2 + ' ' + widget.height * .7 + ')'">
-          <circle r="22" fill="#8f6bff40" /><path d="M0 -17 L13 13 L0 6 L-13 13 Z" fill="white" stroke="#6e4fe0" stroke-width="3" stroke-linejoin="round" />
+          <circle r="22" fill="#b23a5440" /><path d="M0 -17 L13 13 L0 6 L-13 13 Z" fill="white" stroke="#8f1d38" stroke-width="3" stroke-linejoin="round" />
         </g>
         <g :transform="'translate(' + widget.width / 2 + ' ' + (widget.height * .68 + 38) + ')'">
-          <rect :x="-roadNameSize * 4.4" y="0" :width="roadNameSize * 8.8" :height="roadNameSize * 1.55" :rx="roadNameSize * .78" fill="#080c14be" />
-          <text x="0" :y="roadNameSize * 1.12" text-anchor="middle" :font-size="roadNameSize" fill="#eceef6">Desert Inn Road</text>
+          <rect :x="-roadNameSize * 4.4" y="0" :width="roadNameSize * 8.8" :height="roadNameSize * 1.55" :rx="roadNameSize * .78" fill="#100709be" />
+          <text x="0" :y="roadNameSize * 1.12" text-anchor="middle" :font-size="roadNameSize" fill="#f5ecee">Desert Inn Road</text>
         </g>
         <text v-if="googleMap" x="16" :y="widget.height - 12" :font-size="Math.max(14, Math.min(widget.width, widget.height) * .04)" font-weight="600" fill="#f0f2fa">Google Maps</text>
       </g>
