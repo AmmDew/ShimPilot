@@ -57,7 +57,7 @@ export function driveSummary(feed) {
   const maximum = Math.max(1, ...data.week.days.map((day) => day.distanceMeters ?? 0))
   const models = data.models.slice(0, 3)
   const modelTotal = models.reduce((sum, model) => sum + (model.distanceMeters ?? 0), 0)
-  const colors = ["#5ec8c8", "#8b6cc5", "#d4a060"]
+  const colors = ["#5ec8c8", "#b23a54", "#d4a060"]
   let offset = 0
   const stops = models.map((model, index) => {
     const next = offset + (modelTotal > 0 ? (model.distanceMeters ?? 0) / modelTotal * 100 : 0)

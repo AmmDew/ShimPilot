@@ -476,20 +476,20 @@ class ProjectionOnroad:
 
   def _standby(self):
     rl = self.native.rl
-    purple = rl.Color(188, 132, 255, 255)  # StarPilot purple, as on the comma's moon
-    rl.draw_rectangle(0, 0, int(self.width), int(self.height), rl.Color(10, 10, 22, 255))
+    accent = rl.Color(212, 80, 106, 255)  # ShimPilot burgundy, brand ramp hue 349
+    rl.draw_rectangle(0, 0, int(self.width), int(self.height), rl.Color(14, 6, 8, 255))
     panel_height = self.height - 280
     panel = rl.Rectangle(120, 140, self.width - 240, panel_height)
-    rl.draw_rectangle_rounded(panel, 0.06, 16, rl.Color(26, 16, 46, 255))
-    rl.draw_rectangle_rounded_lines_ex(panel, 0.06, 16, 4, purple)
+    rl.draw_rectangle_rounded(panel, 0.06, 16, rl.Color(38, 12, 18, 255))
+    rl.draw_rectangle_rounded_lines_ex(panel, 0.06, 16, 4, accent)
     logo = self._standby_texture(int(panel_height * 0.6))
     text_x = 220
     if logo is not None:
       rl.draw_texture(logo, 200, int((self.height - logo.height) / 2), rl.WHITE)
       text_x = 200 + logo.width + 70
     middle = self.height / 2
-    self.fonts.draw('StarPilot', self.native.font_role.BRAND, 112, text_x, middle - 130, purple)
-    self.fonts.draw('Ready when driving', self.native.font_role.MEDIUM, 55, text_x + 5, middle + 20, rl.Color(222, 204, 255, 255))
+    self.fonts.draw('StarPilot', self.native.font_role.BRAND, 112, text_x, middle - 130, accent)
+    self.fonts.draw('Ready when driving', self.native.font_role.MEDIUM, 55, text_x + 5, middle + 20, rl.Color(238, 203, 210, 255))
 
   def _standby_texture(self, height):
     """Load the logo the first time standby shows; a missing logo leaves the text-only screen."""

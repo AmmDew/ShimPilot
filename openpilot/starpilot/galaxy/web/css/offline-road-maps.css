@@ -15,10 +15,10 @@
 .gx-offline-roads__legend b { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
 .gx-offline-roads__picker { display: grid; grid-template-columns: minmax(0, 2fr) minmax(240px, 1fr); gap: 14px; align-items: start; }
 @media (max-width: 760px) { .gx-offline-roads__picker { grid-template-columns: 1fr; } }
-.gx-offline-roads__map { position: relative; border-radius: 16px; overflow: hidden; background: #0e0e1a; height: 340px; }
+.gx-offline-roads__map { position: relative; border-radius: 16px; overflow: hidden; background: #150709; height: 340px; }
 .gx-offline-roads__map canvas { width: 100%; height: 100%; display: block; cursor: crosshair; touch-action: none; }
 .gx-offline-roads__map .gx-navigation-map__controls { position: absolute; right: 10px; top: 10px; display: grid; gap: 6px; }
-.gx-offline-roads__hint { position: absolute; left: 12px; bottom: 10px; padding: 6px 10px; border-radius: 10px; background: #0e0e1acc; color: #e8e6f5; font-size: .8rem; pointer-events: none; }
+.gx-offline-roads__hint { position: absolute; left: 12px; bottom: 10px; padding: 6px 10px; border-radius: 10px; background: #150709cc; color: #f5ecee; font-size: .8rem; pointer-events: none; }
 .gx-offline-roads__form { display: grid; gap: 8px; }
 .gx-offline-roads__areas { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
 .gx-offline-roads__areas li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 14px; background: color-mix(in srgb, currentColor 5%, transparent); }

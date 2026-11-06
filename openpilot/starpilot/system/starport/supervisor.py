@@ -2055,7 +2055,7 @@ class Supervisor:
       brand_font_path = base / "starpilot" / "ui" / "assets" / "fonts" / "Sora[wght].ttf"  # the logo wordmark's font
       fallback_font_path = base / "selfdrive" / "assets" / "fonts" / "Inter-Black.ttf"  # if Sora cannot be set to weight 800
 
-      bg_color = (10, 10, 22, 255)  # Cosmic void #0a0a16
+      bg_color = (14, 6, 8, 255)  # Wine void #0e0608
       canvas = Image.new("RGBA", (request.width, request.height), bg_color)
 
       # Text is drawn at 4x and shrunk: at car-screen sizes Sora's round letters (S, a, o) dip about half a
@@ -2095,8 +2095,8 @@ class Supervisor:
       layer = Image.new("RGBA", ((text_w + 1) * supersample, (text_h + 1) * supersample), (0, 0, 0, 0))
       draw = ImageDraw.Draw(layer)
       origin = (-bbox[0], -bbox[1])
-      draw.text((origin[0] + supersample, origin[1] + supersample), text, font=font, fill=(30, 20, 50, 180))  # 1 px shadow
-      draw.text(origin, text, font=font, fill=(250, 248, 255, 255))
+      draw.text((origin[0] + supersample, origin[1] + supersample), text, font=font, fill=(48, 12, 20, 180))  # 1 px shadow
+      draw.text(origin, text, font=font, fill=(252, 244, 245, 255))
       layer = layer.resize((text_w + 1, text_h + 1), Image.Resampling.LANCZOS)
       canvas.alpha_composite(layer, (int(text_x), int(text_y)))
       return canvas.tobytes()

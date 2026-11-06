@@ -62,7 +62,7 @@ input[type="range"].gx-slider:disabled { cursor: default; opacity: .4; }
 }
 
 [data-theme="light"] .gx-section__count {
-  background: rgba(120, 73, 232, 0.12);
+  background: rgba(140,26,52, 0.12);
   color: var(--primary);
   font-weight: var(--fw-bold);
 }
@@ -153,7 +153,7 @@ input[type="range"].gx-slider:disabled { cursor: default; opacity: .4; }
 }
 
 [data-theme="light"] .gx-switch__thumb {
-  border: 1px solid rgba(120, 73, 232, 0.3);
+  border: 1px solid rgba(140,26,52, 0.3);
 }
 
 .gx-switch:not(:has(input:disabled)):active .gx-switch__thumb {
@@ -212,8 +212,8 @@ input[type="range"].gx-slider {
 }
 
 [data-theme="light"] input[type="range"].gx-slider {
-  background: rgba(120, 73, 232, 0.18);
-  border: 1px solid rgba(120, 73, 232, 0.3);
+  background: rgba(140,26,52, 0.18);
+  border: 1px solid rgba(140,26,52, 0.3);
 }
 
 input[type="range"].gx-slider.gx-slider--galaxy {
@@ -266,7 +266,7 @@ input[type="range"].gx-slider:active::-moz-range-thumb {
 .gx-select__button > i { flex-shrink: 0; }
 .gx-select:focus-within { outline: 2px solid var(--primary); outline-offset: 2px; }
 .gx-select__button:disabled { opacity: .5; cursor: default; }
-.gx-select-menu { position: fixed; inset: auto; margin: 0; padding: 6px; box-sizing: border-box; max-width: none; overflow-y: auto; overscroll-behavior: contain; border: 1px solid var(--outline-variant, var(--glass-border)); border-radius: var(--radius-md); color: var(--on-surface); background: var(--surface-container-high, #252033); box-shadow: 0 12px 36px #0006; font: var(--fs-base) var(--font-body); }
+.gx-select-menu { position: fixed; inset: auto; margin: 0; padding: 6px; box-sizing: border-box; max-width: none; overflow-y: auto; overscroll-behavior: contain; border: 1px solid var(--outline-variant, var(--glass-border)); border-radius: var(--radius-md); color: var(--on-surface); background: var(--surface-container-high, #2e1a20); box-shadow: 0 12px 36px #0006; font: var(--fs-base) var(--font-body); }
 .gx-select-menu::backdrop { background: transparent; }
 .gx-select-menu [role="option"] { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; min-height: 44px; padding: 10px 12px; border: 0; border-radius: 10px; background: transparent; color: inherit; text-align: left; font: inherit; white-space: normal; overflow-wrap: anywhere; cursor: pointer; touch-action: manipulation; }
 .gx-select-menu [role="option"][aria-selected="true"] { background: var(--primary-container); color: var(--on-primary-container); }
@@ -277,12 +277,12 @@ input[type="range"].gx-slider:active::-moz-range-thumb {
 .gx-select-menu [role="option"]:disabled { opacity: .45; cursor: default; }
 .gx-select-menu__group { padding: 10px 12px 4px; color: var(--on-surface-variant); font-size: .85em; }
 
-.gx-select-menu { background: linear-gradient(var(--surface-container-high), var(--surface-container-high)), #141020; }
+.gx-select-menu { background: linear-gradient(var(--surface-container-high), var(--surface-container-high)), #1c0a0e; }
 [data-theme="light"] .gx-select-menu { background: linear-gradient(var(--surface-container-high), var(--surface-container-high)), #fff; }
 .gx-select-menu:not([open]) { display: none; }
 
 .gx-slider-row.is-fine-scrubbing input[type="range"].gx-slider {
-  background: rgba(157, 114, 255, 0.28);
+  background: rgba(178,58,84, 0.28);
   box-shadow: 0 0 8px var(--primary-glow);
 }
 
@@ -368,9 +368,9 @@ input[type="range"].gx-slider:active::-moz-range-thumb {
 .gx-layout__widget.is-selected .gx-layout__selection, .gx-layout__widget:focus-visible .gx-layout__selection { opacity: 1; }
 .gx-layout__widget:focus-visible .gx-layout__selection { stroke: #fff; stroke-dasharray: none; }
 /* The widget open in Edit; the glow size is in canvas units, so the stage sets it per layout size. */
-.gx-layout__widget.is-editing .gx-layout__selection { opacity: 1; stroke-dasharray: none; filter: drop-shadow(0 0 var(--layout-glow) #b799ff); }
+.gx-layout__widget.is-editing .gx-layout__selection { opacity: 1; stroke-dasharray: none; filter: drop-shadow(0 0 var(--layout-glow) #d06a7e); }
 .gx-layout__resize { cursor: nwse-resize; touch-action: none; }
-.gx-layout__resize:hover circle:last-of-type { fill: #d4c2ff; }
+.gx-layout__resize:hover circle:last-of-type { fill: #e8b3bd; }
 .gx-layout__widget-list { display: grid; gap: 8px; }
 .gx-layout__position, .gx-layout__tray, .gx-layout__color { display: grid; gap: 10px; }
 .gx-layout__position, .gx-layout__tray { padding-block: 16px; border-top: 1px solid var(--glass-border); }
@@ -648,14 +648,14 @@ input[type="range"].gx-slider:active::-moz-range-thumb {
 
 /* Tap-area overlay label sits on the preview while the grid toggle is on. */
 .gx-layout__preview-card > .gx-layout__stage { position: relative; margin-inline: 0; min-width: 0; }
-.gx-layout__stage-chip { position: absolute; top: 6px; right: 6px; z-index: 1; display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border: 1px solid #b799ff88; border-radius: var(--radius-full); background: rgba(22, 18, 31, .82); color: #d8c8ff; font-size: var(--fs-xs); font-weight: var(--fw-bold); white-space: nowrap; pointer-events: none; }
+.gx-layout__stage-chip { position: absolute; top: 6px; right: 6px; z-index: 1; display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border: 1px solid #d06a7e88; border-radius: var(--radius-full); background: rgba(38,14,20, .82); color: #f4cdd4; font-size: var(--fs-xs); font-weight: var(--fw-bold); white-space: nowrap; pointer-events: none; }
 .gx-layout__stage-chip--below { position: static; justify-self: end; }
 .gx-layout__stage-chip--start { right: auto; left: 6px; max-width: calc(100% - 12px); overflow: hidden; text-overflow: ellipsis; display: block; }
 /* Covers the whole bar, buttons included, so its size never changes mid-drag. */
 .gx-layout__savebar-snap { position: absolute; inset: 0; z-index: 1; display: flex; align-items: center; gap: 6px; padding: 0 14px; border-radius: inherit; background: inherit; color: var(--primary); font-weight: var(--fw-bold); pointer-events: none; }
 .gx-layout__savebar-snap > .bi { flex: none; }
 .gx-layout__stage-chip--with-tap-areas { max-width: calc(100% - 120px); }
-.gx-layout__guide { stroke: #b799ff; stroke-width: 1.5; }
+.gx-layout__guide { stroke: #d06a7e; stroke-width: 1.5; }
 .gx-layout__guide--center { stroke-dasharray: 6 4; }
 .gx-layout__guide--bounds, .gx-layout__guide--zone { stroke: #8495a8; }
 
@@ -711,24 +711,24 @@ html.gx-maker-open, html.gx-maker-open body { touch-action: manipulation; }
 .gx-layout__display .gx-row .gx-field { min-height: 0; padding-block: 0; }
 
 .gx-model-card--polaris {
-  border-color: #9b7be8;
-  background-image: radial-gradient(ellipse at top left, #a855f71a, transparent 65%), linear-gradient(120deg, transparent 40%, #38bdf810);
+  border-color: #a3455c;
+  background-image: radial-gradient(ellipse at top left, #b23a541a, transparent 65%), linear-gradient(120deg, transparent 40%, #38bdf810);
 }
 .gx-model-card--polaris .gx-model-card__title {
-  color: #bca0ff;
-  background: linear-gradient(110deg, #b77aff 0%, #a494ff 25%, #38cfff 45%, #f0eaff 50%, #38cfff 55%, #a494ff 75%, #b77aff 100%);
+  color: #d77d92;
+  background: linear-gradient(110deg, #d0607a 0%, #c25a70 25%, #38cfff 45%, #f8ecef 50%, #38cfff 55%, #c25a70 75%, #d0607a 100%);
   background-size: 200% 100%;
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: gx-polaris-flow 1.8s linear infinite;
 }
-.gx-polaris-badge { color: #c4b5fd; border-color: #a78bfa70; background: #8b5cf618; gap: 6px; }
+.gx-polaris-badge { color: #e0a2af; border-color: #c9536b70; background: #b23a5418; gap: 6px; }
 .gx-polaris-badge__star { display: inline-block; animation: gx-polaris-star 1.8s ease-in-out infinite; }
 [data-theme="light"] .gx-model-card--polaris .gx-model-card__title {
-  background-image: linear-gradient(110deg, #7c3aed 0%, #5b4bd8 25%, #0369a1 45%, #a855f7 50%, #0369a1 55%, #5b4bd8 75%, #7c3aed 100%);
+  background-image: linear-gradient(110deg, #93223f 0%, #7a1832 25%, #0369a1 45%, #b23a54 50%, #0369a1 55%, #7a1832 75%, #93223f 100%);
 }
-[data-theme="light"] .gx-polaris-badge { color: #6d28d9; }
+[data-theme="light"] .gx-polaris-badge { color: #8f1d38; }
 @keyframes gx-polaris-flow { from { background-position: 200% 50%; } to { background-position: 0% 50%; } }
 @keyframes gx-polaris-star {
   0%, 100% { transform: rotate(-15deg) scale(.85); opacity: .65; }
