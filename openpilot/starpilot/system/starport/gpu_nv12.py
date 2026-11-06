@@ -45,7 +45,7 @@ out vec4 finalColor;
 ivec3 px(int x, int y) {
   ivec2 p = ivec2(x, y) - sourceOffset;
   ivec2 size = textureSize(texture0, 0);
-  if (any(lessThan(p, ivec2(0))) || any(greaterThanEqual(p, size))) return ivec3(6, 6, 15);
+  if (any(lessThan(p, ivec2(0))) || any(greaterThanEqual(p, size))) return ivec3(11, 4, 6);
   if (composeSource != 0) p.y = size.y - 1 - p.y;
   // Use RGB only. The UI texture starts from an opaque clear, so its RGB is
   // already the final color; its alpha depends on which blend mode drew each
@@ -88,7 +88,7 @@ def compose_rgba(source, target, margin_w: int, margin_h: int, *, fit: bool = Fa
   """
   from openpilot.starpilot.ui.raylib import rl
   rl.begin_texture_mode(target)
-  rl.clear_background(rl.Color(6, 6, 15, 255))
+  rl.clear_background(rl.Color(11, 4, 6, 255))
   rl.rl_set_blend_factors(GL_ONE, GL_ZERO, GL_FUNC_ADD)
   rl.begin_blend_mode(rl.BlendMode.BLEND_CUSTOM)
   # A positive source height flips on the GPU so the readback is top-down for the encoder.

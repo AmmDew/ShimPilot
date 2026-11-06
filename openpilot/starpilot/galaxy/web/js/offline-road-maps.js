@@ -173,7 +173,7 @@ export const OfflineRoadMapsPanel = {
       if (!bytes) return null
       const used = (bytes.saved || 0) + (bytes.driven || 0) + (bytes.cache || 0)
       const cap = limits ? (limits.saved || 0) + (limits.driven || 0) + (limits.cache || 0) : 0
-      return { used, cap, parts: [["Areas", bytes.saved || 0, "#9d72ff"], ["Driven", bytes.driven || 0, "#34c778"], ["Recent", bytes.cache || 0, "#4096ff"]] }
+      return { used, cap, parts: [["Areas", bytes.saved || 0, "#b23a54"], ["Driven", bytes.driven || 0, "#34c778"], ["Recent", bytes.cache || 0, "#4096ff"]] }
     },
     usage() { const usage = this.data?.usage || {}; return { tiles: usage.tiles || 0, free: usage.freeTiles || 200000 } },
     // This counter covers this comma, not other uses of the same key.
@@ -211,8 +211,8 @@ export const OfflineRoadMapsPanel = {
     drawOverlays() {
       if (!this.map) return
       const saved = (this.data?.areas || []).map((area) => ({
-        ...area, stroke: area.progress?.state === "complete" ? "#34c778" : "#9d72ff",
-        fill: area.progress?.state === "complete" ? "#34c77822" : "#9d72ff1f"
+        ...area, stroke: area.progress?.state === "complete" ? "#34c778" : "#b23a54",
+        fill: area.progress?.state === "complete" ? "#34c77822" : "#b23a541f"
       }))
       const draft = this.point ? [{ ...this.point, radiusKm: this.radiusKm, stroke: "#f5b642", fill: "#f5b64226", dash: [8, 6], width: 3 }] : []
       const overlays = [...saved, ...draft], signature = JSON.stringify(overlays)
@@ -286,7 +286,7 @@ export const OfflineRoadMapsPanel = {
         <ul v-if="data?.areas.length" class="gx-offline-roads__areas" aria-label="Saved offline areas">
           <li v-for="area in data.areas" :key="area.id">
             <div class="gx-offline-roads__area"><strong>{{ area.name }}</strong><small>{{ radiusLabel(area.radiusKm, metric) }} radius · {{ areaLabel(area) }}</small>
-              <div v-if="area.progress && area.progress.state !== 'complete'" class="gx-offline-roads__bar"><i :style="{ width: (area.progress.total ? area.progress.done / area.progress.total * 100 : 0) + '%', background: '#9d72ff' }"></i></div></div>
+              <div v-if="area.progress && area.progress.state !== 'complete'" class="gx-offline-roads__bar"><i :style="{ width: (area.progress.total ? area.progress.done / area.progress.total * 100 : 0) + '%', background: '#b23a54' }"></i></div></div>
             <div class="gx-navigation__actions">
               <button type="button" class="gx-btn gx-btn--tonal" @click="focus(area, area.radiusKm)">Show</button>
               <button v-if="confirmDelete !== area.id" type="button" class="gx-btn gx-btn--tonal" @click="confirmDelete = area.id">Delete</button>
