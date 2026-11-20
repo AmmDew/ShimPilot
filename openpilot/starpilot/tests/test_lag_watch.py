@@ -170,6 +170,83 @@ def test_pump_edge_flush_and_throttle(fake_proc):
   assert len(flushes) == 3
 
 
+def test_pump_lag_source_polled(fake_proc):
+  clock = FakeClock()
+  sampler = ProcSampler(root=fake_proc, clock=clock, tick_hz=100)
+  flushes = []
+  state = {"lag": False}
+  watch = LagWatch(sampler=sampler, on_flush=flushes.append, lag_source=lambda: state["lag"])
+  clock.advance(5.0)
+  watch.pump()
+  assert flushes == []
+  state["lag"] = True                     # simulated rk.lagging rising edge
+  clock.advance(5.0)
+  watch.pump()
+  assert len(flushes) == 1
+  clock.advance(30.0)
+  watch.pump()
+  assert len(flushes) == 1                # throttled while persisting
+
+
+def test_kernel_outlier_survives_userspace_flood(tmp_path):
+  # reviewer S2: >= TOP_N busy userspace must not truncate a saturating kernel thread
+  root = tmp_path / "proc"
+  root.mkdir()
+  _write_proc_stat(root, {"cpu0": (1000, 900)})
+  for pid in range(1000, 1015):           # 15 userspace, all above the 1% floor
+    _write_proc(root, pid, "u", utime=0, cmdline=b"python\x00-m\x00mod\x00\x00")
+  _write_proc(root, 1200, "ksoftirqd/5", utime=0, cmdline=b"")
+  clock = FakeClock()
+  sampler = ProcSampler(root=root, clock=clock, tick_hz=100)
+  sampler.sample()
+  clock.advance(5.0)
+  for pid in range(1000, 1015):
+    _bump(root, pid, 30)                  # 30 ticks / 500 = 6% each
+  _bump(root, 1200, 480)                  # ksoftirqd pins core 5: 96%
+  sampler.sample()
+  payload = sampler.payload()
+  userspace_rows = [r for r in payload["procs"] if not r["k"]]
+  assert len(userspace_rows) == 12        # TOP_N cap
+  krow = next(r for r in payload["procs"] if r["k"])
+  assert krow["c"] == 96.0 and krow["n"] == "[ksoftirqd/5]"
+
+
+def test_heartbeat_baseline(fake_proc):
+  clock = FakeClock()
+  sampler = ProcSampler(root=fake_proc, clock=clock, tick_hz=100)
+  baselines = []
+  watch = LagWatch(sampler=sampler, on_baseline=baselines.append, baseline_interval=300.0)
+  clock.advance(5.0)
+  watch.pump()
+  assert baselines == []                  # offroad: silent
+  watch.heartbeat(True)
+  watch.pump()                            # onroad transition: baseline right away
+  assert len(baselines) == 1
+  clock.advance(120.0)
+  watch.pump()
+  assert len(baselines) == 1              # before interval: quiet
+  clock.advance(180.0)                    # 300 s since last baseline
+  watch.pump()
+  assert len(baselines) == 2
+  watch.heartbeat(False)                  # offroad again: quiet even past interval
+  clock.advance(600.0)
+  watch.pump()
+  assert len(baselines) == 2
+
+
+def test_install_guards(monkeypatch, tmp_path):
+  from openpilot.starpilot import lag_watch
+  monkeypatch.setenv("REPLAY", "1")
+  assert lag_watch.install(object()) is None
+  monkeypatch.delenv("REPLAY")
+  monkeypatch.setenv("SIMULATION", "1")
+  assert lag_watch.install(object()) is None
+  monkeypatch.delenv("SIMULATION")
+  import openpilot.common.hardware as hw
+  monkeypatch.setattr(hw, "PC", True)
+  assert lag_watch.install(object()) is None   # host runs never start sampler threads
+
+
 def test_pump_survives_broken_sampler(tmp_path):
   class Boom(ProcSampler):
     def sample(self):

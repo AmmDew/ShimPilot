@@ -6,23 +6,29 @@ saturates that core, the Ratekeeper trips and openpilot soft-disables with
 ring of per-process CPU deltas sampled from /proc.
 
 Safety properties (non-negotiable):
-- The sampler thread pins itself to background cores 0-2 under SCHED_IDLE
-  (nice 19 fallback), mirroring starport/placement.py: ordinary driving work
-  always preempts it and it cannot compete on the controls/model cores 3-7.
-- Nothing here runs inside the 10 ms control loop: the hot path may only
-  call note_lag()/note_ok(), which set/clear a threading.Event.
-- Pure /proc reads and dict math; no imports of messaging, params, or
-  hardware stacks, so it cannot block on or perturb anything that drives.
+- Threads created inside an RT process INHERIT SCHED_FIFO + the driving-core pin
+  (config_realtime_process runs before SelfdriveD construction). _run()
+  therefore demotes itself FIRST: affinity set directly to background cores
+  0-2 (never intersected with the inherited mask — that mask IS the driving
+  core), under SCHED_IDLE, with SCHED_OTHER + nice 19 fallback (nice alone is
+  inert under FIFO). Mirrors starport placement policy: ordinary driving work
+  always preempts it; cores 3-7 are off-limits.
+- Nothing runs inside the 10 ms control loop: the host calls install(self) once
+  at construction and heartbeat(bool) after monitor_time(); lagging is detected
+  by the sampler thread READING rk.lagging (read-only MovingAverage property;
+  a torn read is harmless). note_lag()/note_ok() remain as a push API.
+- Pure /proc reads and dict math; stdlib-only imports at module scope. Every
+  callback is exception-isolated; observation must never take the host down.
 - Observability only: no alert, threshold, affinity, or safety behavior in
   openpilot is modified by this module.
 
-Typical host use (standalone daemon or RT process sidecar):
-
-    from openpilot.starpilot import lag_watch
-    watch = lag_watch.LagWatch()
-    watch.start()          # spawns the SCHED_IDLE sampler thread
-    ...
-    watch.note_lag()       # rising edge of selfdrivedLagging (ns, event.set)
+Host wiring (see selfdrived): `self.lag_watch = lag_watch.install(self)` after
+Ratekeeper construction; `self.lag_watch.heartbeat(...)` after rk.monitor_time().
+After a storm, "lag_tripwire" events land in errorLogMessage (qlog + rlog):
+t, dur, cores{cpuN: busy%}, avg_dt_ms, count, dropped,
+procs[{n, c, k}] — c is ONE-core normalized (a single-core burner reads ~100;
+>100 = multithreaded). Userspace and kernel rows are selected per class so a
+core-pinned kworker can never be truncated away.
 """
 from __future__ import annotations
 
@@ -36,7 +42,8 @@ from pathlib import Path
 BACKGROUND_CORES = (0, 1, 2)   # never 3-7: driving cores, per starport placement policy
 SAMPLE_SECONDS = 5.0
 RING_ENTRIES = 36               # 3 minutes of history
-FLUSH_MIN_INTERVAL = 60.0       # at most one log event per minute while lagging persists
+FLUSH_MIN_INTERVAL = 60.0       # at most one tripwire event per minute while lagging persists
+BASELINE_INTERVAL = 300.0       # onroad heartbeat for clean-drive comparison
 TOP_N = 12
 KERNEL_TOP_N = 3                # kernel workers can be the real culprit; keep them in view
 PAYLOAD_BUDGET_BYTES = 6000     # keep each log event comfortably under capnp/swaglog comfort
@@ -135,7 +142,7 @@ class ProcSampler:
     latest = self.ring[-1]
     userspace = [row for row in latest["procs"] if not row["k"]][:TOP_N]
     kernels = [row for row in latest["procs"] if row["k"]][:KERNEL_TOP_N]
-    body = {"t": latest["t"], "dur": latest["dur"], "cores": latest["cores"]}
+    body = {"t": latest["t"], "dur": latest["dur"], "cores": latest["cores"], "count": latest["count"]}
     if extra:
       body.update(extra)
     chosen: list[dict] = []
@@ -149,41 +156,86 @@ class ProcSampler:
 
 
 class LagWatch:
-  """Background SCHED_IDLE sampler with edge-triggered flush. Host supplies on_flush(dict)."""
+  """Background SCHED_IDLE sampler with edge-triggered flush.
 
-  def __init__(self, sampler: ProcSampler | None = None, on_flush=None,
-               sample_seconds: float = SAMPLE_SECONDS, flush_min_interval: float = FLUSH_MIN_INTERVAL):
+  Lag detection: lag_source() polled by the sampler thread (selfdrived passes
+  lambda: self.rk.lagging — read-only, lock-free). note_lag()/note_ok() remain
+  as a push API for other hosts."""
+
+  def __init__(self, sampler: ProcSampler | None = None, on_flush=None, on_baseline=None,
+               lag_source=None, lag_extra=None,
+               sample_seconds: float = SAMPLE_SECONDS, flush_min_interval: float = FLUSH_MIN_INTERVAL,
+               baseline_interval: float = BASELINE_INTERVAL):
     self.sampler = sampler or ProcSampler()
     self.on_flush = on_flush or (lambda payload: None)
+    self.on_baseline = on_baseline or (lambda payload: None)
+    self.lag_source = lag_source
+    self.lag_extra = lag_extra
     self.sample_seconds = sample_seconds
     self.flush_min_interval = flush_min_interval
+    self.baseline_interval = baseline_interval
     self._lag_event = threading.Event()
     self._stop_event = threading.Event()
+    self._was_lagging = False
     self._last_flush: float | None = None
+    self._onroad = False
+    self._last_baseline: float | None = None
     self._thread: threading.Thread | None = None
     self._pump_count = 0
 
-  # --- hot-path API: O(1), no I/O, no locks beyond an Event flag ---
+  # --- hot-path API: bool store only ---
+  def heartbeat(self, onroad: bool) -> None:
+    onroad = bool(onroad)
+    if onroad and not self._onroad:
+      self._last_baseline = None   # first onroad pump emits a baseline right away
+    self._onroad = onroad
+
   def note_lag(self) -> None:
     self._lag_event.set()
 
   def note_ok(self) -> None:
     self._lag_event.clear()
 
+  def _lagging(self) -> bool:
+    if self.lag_source is not None:
+      try:
+        return bool(self.lag_source())
+      except Exception:
+        return False
+    return self._lag_event.is_set()
+
   # --- mechanics, kept separate from threading so tests drive it directly ---
   def pump(self, now: float | None = None) -> None:
     try:
       self.sampler.sample()
       self._pump_count += 1
-      if not self._lag_event.is_set():
-        self._last_flush = None   # re-arm: next rising edge flushes immediately
-        return
       stamp = self.sampler.clock() if now is None else now
-      if self._last_flush is None or stamp - self._last_flush >= self.flush_min_interval:
+      lagging = self._lagging()
+      if lagging and (not self._was_lagging or self._last_flush is None or
+                      stamp - self._last_flush >= self.flush_min_interval):
         self._last_flush = stamp
-        self.on_flush(self.sampler.payload())
+        extra = None
+        if self.lag_extra is not None:
+          try:
+            extra = self.lag_extra()
+          except Exception:
+            extra = None
+        self._emit(self.on_flush, self.sampler.payload(extra))
+      elif not lagging:
+        self._last_flush = None   # re-arm: next rising edge flushes immediately
+      self._was_lagging = lagging
+      if self._onroad and (self._last_baseline is None or stamp - self._last_baseline >= self.baseline_interval):
+        self._last_baseline = stamp
+        self._emit(self.on_baseline, self.sampler.payload())
     except Exception:
       pass   # observation must never take the host down
+
+  @staticmethod
+  def _emit(cb, payload) -> None:
+    try:
+      cb(payload)
+    except Exception:
+      pass
 
   def start(self) -> "LagWatch":
     if self._thread is not None:
@@ -196,19 +248,46 @@ class LagWatch:
     self._stop_event.set()
 
   def _run(self) -> None:
-    try:   # background-core placement; never on 3-7, never above ordinary work
-      os.sched_setaffinity(0, set(BACKGROUND_CORES) & set(os.sched_getaffinity(0)))
-    except (AttributeError, OSError):
+    # CRITICAL: this thread may have INHERITED SCHED_FIFO on a driving core.
+    # Demote before touching /proc, or the observer becomes the storm.
+    try:
+      os.sched_setaffinity(0, set(BACKGROUND_CORES))   # set directly; the inherited mask IS the driving core
+    except OSError:
       pass
     try:
       os.sched_setscheduler(0, os.SCHED_IDLE, os.sched_param(0))
     except (AttributeError, OSError):
-      try:
-        os.nice(FALLBACK_NICE)
-      except OSError:
+      try:   # nice alone is inert under FIFO — leave FIFO first, then demote
+        os.sched_setscheduler(0, os.SCHED_OTHER, os.sched_param(0))
+        os.setpriority(os.PRIO_PROCESS, 0, FALLBACK_NICE)
+      except (AttributeError, OSError):
         pass
     while not self._stop_event.wait(self.sample_seconds):
-      try:
-        self.pump()
-      except Exception:
-        pass   # a broken sampler must never take the host down
+      self.pump()   # pump is self-isolating
+
+
+def install(selfdrived) -> LagWatch | None:
+  """Wire the tripwire into a driving-RT process (call once, after self.rk exists).
+  Returns None (and starts nothing) under replay/simulation/PC."""
+  if "REPLAY" in os.environ or "SIMULATION" in os.environ:
+    return None
+  try:
+    from openpilot.common.hardware import PC
+    if PC:
+      return None
+  except Exception:
+    return None
+
+  def flush(payload):
+    from openpilot.common.swaglog import cloudlog
+    cloudlog.event("lag_tripwire", error=True, **payload)
+
+  def baseline(payload):
+    from openpilot.common.swaglog import cloudlog
+    cloudlog.event("lag_baseline", **payload)
+
+  watch = LagWatch(on_flush=flush, on_baseline=baseline,
+                   lag_source=lambda: bool(selfdrived.rk.lagging),
+                   lag_extra=lambda: {"avg_dt_ms": round(selfdrived.rk.avg_dt.get_average() * 1000.0, 2)})
+  watch.start()
+  return watch
