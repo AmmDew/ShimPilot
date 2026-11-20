@@ -29,6 +29,7 @@ from openpilot.selfdrive.car.car_events import CarEvents
 from openpilot.selfdrive.locationd.helpers import PoseCalibrator, Pose
 from openpilot.selfdrive.selfdrived.events import Events, ET, Alert, EngagementAlert, Priority as AlertPriority
 from openpilot.selfdrive.selfdrived.bookmarks import BookmarkCounter
+from openpilot.starpilot import lag_watch
 from openpilot.starpilot.bookmark_state import BookmarkCheckpoint
 from openpilot.starpilot.longitudinal.force_stop_alert import HoldAlertState, EVENT_TYPE as FORCE_STOP_HOLD
 from openpilot.selfdrive.selfdrived.helpers import (ExcessiveActuationCheck, jetlink_in_control, jetlink_lost_alert, throttled_param,
@@ -259,6 +260,10 @@ class SelfdriveD:
     self.state_machine = StateMachine()
     self.legacy_2025_green_wheel_active = False
     self.rk = Ratekeeper(100, print_delay_threshold=None)
+    # Observation-only tripwire (ShimPilot fork): identifies the core-5 co-resident
+    # during "System Lagging" storms. Sampler thread self-demotes to SCHED_IDLE on
+    # cores 0-2; this loop only stores an onroad bool. Returns None on PC/replay/sim.
+    self.lag_watch = lag_watch.install(self)
     # Observational only. Do not cache this qualification for authority decisions.
 
     # Determine startup event
@@ -2554,6 +2559,8 @@ class SelfdriveD:
       while True:
         self.step()
         self.rk.monitor_time()
+        if self.lag_watch is not None:
+          self.lag_watch.heartbeat(self.sm.seen['deviceState'] and self.sm['deviceState'].started)
     finally:
       e.set()
       t.join()
